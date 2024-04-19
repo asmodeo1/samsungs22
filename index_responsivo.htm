@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Samsung S22</title>
+    <style>
+        /* Esta página no tiene un diseño complejo, con lo que no hace falta usar flex o grid.
+        Siempre que hablemos de pantallas en los comentarios, también nos referimos a ventanas */
+        * {
+            margin: 0;
+            padding: 0;
+            text-decoration: none;
+            font-size: 100%;
+        }
+        /* Recodemos que en font-weith se puede poner valores de 100 (más fina) a 900 (más gruesa),
+        con lo que a veces algunos nombres de fuentes llevan ese número para indicar el grosor */
+        @font-face {
+            font-family: samsungone400;
+            src: url(fuentes/SamsungOne-400.woff2);
+        }
+        @font-face {
+            font-family: samsungone700;
+            src: url(fuentes/SamsungOne-700.woff2);
+        }
+        /* Como casi siempre, si hacemos la página responsiva, conviene poner un ancho
+        máximo a los elementos, ya sea todo el body, o algunos en concreto, además de centrarla
+        horizontalmente */
+        body {
+            max-width: 1300px;
+            margin: auto;
+        }
+        header {
+            background-color: rgb(4, 43, 121);
+            /* Conviene indicar otro tipo de letra y una familia al final por si no se puede
+            cargar la deseada */
+            font-family: samsungone700, 'Lucida Sans', sans-serif;
+            font-size: 5rem;
+            color:white;
+            text-align: center;
+        }
+        header span {
+            color:rgb(78, 183, 236);
+        }
+        main {
+            font-family: samsungone400, sans-serif;;
+            margin: auto; /* Centramos horizontalmente el main */
+        }
+        main h2 {
+            font-family: samsungone700, sans-serif;
+            font-size: 2rem;
+            color: black;
+            border-bottom: 2px solid lightgray;
+            text-align: center;
+            /* Para que la línea del borde inferior no sea tan larga */
+            width: 50%;
+            margin: 40px auto;
+        }
+        main p {
+            margin: 1rem;
+            text-align: center;
+        }
+        main img {
+            /* Casi siempre, al crera páginas responsivas, debemos indicar un máximo
+            en una unidad relativa, normalmente porcentajes. En este caso 90% pues
+            no queremos que en pantallas pequeñas quede muy pegada a los bordes */
+            max-width: 90%;
+            /* La convertimos a bloque para poder centrarla con margin. Otra opción
+            sería meter las imágenes en un contenedor y usar text-align:center en este */
+            display: block;
+            margin: auto;
+        }
+        /* En pantallas pequeñas vamos a hacer que las caractéristicas solo aparezcan
+        al pusar en un botón. Para hacerlo sin JavaScript, podemos recurrir al truco
+        de usar un label enlazado con su atributo for a un input de tipo checkbox y ocultar
+        este último. Enlanzado el label, al pulsar en este es como pulsar en el input */
+        main input {
+            display: none;
+        }
+        ul {
+            width: 50%;
+            margin: auto;
+            /* Por defecto estará oculta. También podríamos mostrarla por defecto
+            y crear una media query para que lo oculte en tamaños pequeños */
+            display: none;
+        }
+        ul li:hover {
+            /* Movemos un poco los elementos de la lista hacia la derecha al pasar
+            el ratón por encima de cada uno de ellos */
+            margin-left: 20px;
+        }
+        /* Este es el label, el cual cambiaremos de diseño para que parezca un botón */
+        .caracteristicas {
+            display: block; /* Para poder darle un width y márgenes superiores e inferiores */
+            width: 50%;
+            margin: 0 auto 20px;
+            text-align: center;
+            border: 2px solid rgb(28, 84, 197);
+            border-radius: 10px;
+            /* Como los h2 tienen un margen inferior de 40px, queda mucho espacio vacío
+            con el label. Podríamos cambair ese margen en los h2, o mover el label
+            usando un margen negativo */
+            margin-top: -20px;
+        }
+        .caracteristicas:hover {
+            background-color: rgb(65, 104, 146);
+            color: white;
+        }
+        /* Cuando esté marcado el input mostramos el ul, el cual debe ser el hermano del input
+        en el HTML */
+        #caracteristicas:checked + ul {
+            display: block;
+        }
+        /* Si tuviésemos el label dentro del h2, ya no sería hermano del ul. Una posibilidad
+        sería usar :has que permite comprobar si un elemento contiene algún hijo o nieto que
+        cumpla determinada condición, pero sin entrar en el mismo, cosa que hace un espacio o >.
+
+        main:has(#caracteristicas:checked) ul {
+            display: block;
+        }
+        */
+
+        footer {
+            background-color: rgb(4, 43, 121);
+            font-family: samsungone400, sans-serif;;
+            font-size: .7rem;
+            color:white;
+            padding: 10px 20px;
+            text-align: center;
+            margin-top: 20px;
+        }
+        footer p {
+            margin-bottom: 20px;
+        }
+        footer img {
+            margin: auto 20px;
+        }
+
+        /* Solo hemos creado dos media queries y unos píxeles a partir de pruebas, pero
+        podemos tener todos las media queries que deseemos */
+        /* Para pantallas de un máximo de 550px*/
+        @media all and (max-width: 550px) {
+            /* En tamaño pequeños el texto del encabezado lo hacemos más pequeño */
+            header h1 {
+                font-size: 2.7rem;
+            }
+            /* Damos más ancho a los h2 y listas */
+            main h2, main ul {
+                width: 80%;
+            }
+            /* Cambiamos el texto de centrado a justificado */
+            main p {
+                text-align: justify;
+            }
+            /* Ponemos menos padding en el footer */
+            footer {
+                padding: 10px;
+            }
+        }
+        /* En pantallas de 800px en adelante, mostramos las características
+        y ocultamos el label (botón) que las mostraría */
+        @media all and (min-width: 800px) {
+            .caracteristicas, #caracteristicas {
+                display: none;
+            }
+            ul {
+                display: block;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>
+            Samsung <span>S22</span>
+        </h1>
+    </header>
+    <main>
+        <h2>Presentación</h2>
+        <p>¡Presentamos el último avance tecnológico de Samsung: el impresionante Samsung S22! Diseñado para deslumbrar y elevar tus experiencias móviles, este dispositivo redefine la excelencia en el mundo de los smartphones. Con su elegante diseño ergonómico y una pantalla Super AMOLED de última generación, el S22 te sumerge en un universo visual cautivador donde cada detalle cobra vida con colores vibrantes y una nitidez sin igual. </p>
+        <p> Además, con un potente procesador de última generación y una memoria RAM ampliada, el Samsung S22 ofrece un rendimiento extraordinario que supera todas las expectativas. Ya sea que estés jugando a tus juegos favoritos, capturando momentos inolvidables con su avanzado sistema de cámaras, o navegando por tus aplicaciones diarias, este dispositivo te brinda una experiencia fluida y sin interrupciones. Descubre un mundo de posibilidades ilimitadas con el Samsung S22: la combinación perfecta de estilo, innovación y rendimiento incomparable. </p>
+        <h2>Modelos</h2>
+        <img src="imagenes/modelos.avif" alt="Galaxy S22+ y Galaxy S22">
+        <h2>Colores</h2>
+        <!-- La imagen original de los colores tiene unos espacios vacíos por los lados
+        bastante grandes, con lo que en pantallas más pequeñas se verían muy pequeños
+        los móviles de la imagen. Usando los atributos srcset e sizes de la etiqueta
+        img podemos tener otra imagen si esos espacios y hacer que se muestre una u otra:
+        - en srcset ponemos todas las imágenes deseadas separadas por comas y con su 
+        ancho en píxeles, pero usando w en lugar de px
+        - en sizes indicamos restricciones para que se muestre una u otra según el ancho
+        de pantalla u otras condiciones. En este caso al no indicar una restricción a la
+        segunda imagen, se mostrará en los demás casos.
+
+        Pero tener en cuenta que esto es una recomendación al navegador, pues dependiendo
+        del ratio de píxeles del dispositivo, puede que muestre una imagen u otra, pudiendo
+        elegir la que se vea más nítida. Por ejemplo, si tenemos una imagen con 400w y otra
+        con 800w, puede que eliga la de 800 a determinado ancho si el dispositivo tiene
+        un ratio de 2 o superior.
+
+        Si queremos asegurarnos que se use la que indicamos, debemos usar la etiqueta picture
+    -->
+        <img src="imagenes/colores.jpg" alt="Colores disponibles 1"
+        srcset="imagenes/coloresp.jpg 624w, imagenes/colores.jpg 1440w"
+        sizes="(max-width: 550px) 624w, 1440w"
+        >
+        <img src="imagenes/colores2.jpg" alt="Colores disponibles 1"
+        srcset="imagenes/colores2p.jpg 624w, imagenes/colores2.jpg 1440w"
+        sizes="(max-width: 550px) 624w, 1440w">
+        <h2>Contenido</h2>
+        <img src="imagenes/contenido.jpg" alt="Contenido: móvil, cable y extractor tarjeta">
+        <h2>Características</h2>
+        <label for="caracteristicas" class="caracteristicas">+</label>
+        <input type="checkbox" id="caracteristicas">
+        <ul>
+            <li>Nightography | Haz que las noches sean épicas</li>
+            <li>Eclipsa al sol</li>
+            <li>Procesador de 4 nm, nuestro chip más rápido hasta ahora</li>
+            <li>Movimientos más suaves con Smooth Video</li>
+            <li>Carga rápida que dura todo el día</li>
+        </ul>
+    </main>
+    <footer>
+        <p> Publicidad: Oferta financiera ofrecida por la Entidad de Pago híbrida CaixaBank Payments & Consumer, E.F.C., E.P., S.A.U., y sujeta a su autorización. Financiación a 3, 6, 12, 24 y 36 meses sin intereses. *TIN 0 % TAE 0 %. Plazo 3 meses: Importe entre 299 € y 600 €. Ejemplo para una compra financiada de 300 €. Importe de las cuotas 100 €. Importe total adeudado: 300 €. Coste total del crédito e intereses 0 €. Precio total a plazos: 300 €. Plazo 6 meses: Importe entre 299 € y 3.000 €. Ejemplo para una compra financiada de 1.500 €. Importe de las cuotas 250 €. Importe total adeudado: 1.500 €. Coste total del crédito e intereses 0€. Precio total a plazos: 1.500 €. Plazo 12 meses: Importe entre 299 € y 3.000 €. Ejemplo para una compra financiada de 1.500€. Importe de las cuotas 125€. Importe total adeudado: 1.500€. Coste total del crédito e intereses 0€. Precio total a plazos: 1.500€. Plazo 24 meses: Importe entre 600,01 € y 5500 €. Ejemplo para una compra financiada de 1.500€. Importe de las cuotas 62,5€. Importe total adeudado: 1.500€. Coste total del crédito e intereses 0€. Precio total a plazos: 1.500€. Plazo 36: Importe entre 899 € a 5.500 €. Ejemplo para una compra financiada de 3.499 €. 35 cuotas de 97,19€ y una última cuota 97,35 €. Importe Total Adeudado 3.499 €. Coste total del crédito e intereses: 0 €. Precio total a plazos: 3.499€. Sistema de amortización francés.</p>
+        <!-- Hemos usado target="_blank" para recordaros que sirve para mostrar la página en
+            una nueva pestaña o ventana -->
+        <a href="https://www.facebook.com/samsungelectronics" target="_blank"><img src="imagenes/facebook.png" alt="facebook"></a>
+        <a href=""><img src="imagenes/twitter.png" alt="twitter"></a>
+        <a href=""><img src="imagenes/youtube.png" alt="yotube"></a>
+    </footer>
+</body>
+</html>
+
